@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import config.Config;
 
 public class ServeurRMIImpl implements ServeurRMI {
-	private static final Logger logger = Logger.getLogger(ServeurRMI.class.getName());
+	private static final Logger logger = Logger.getLogger(ServeurRMIImpl.class.getName());
 	
 	@Override
 	public String meth() throws RemoteException {
