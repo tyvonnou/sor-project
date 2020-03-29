@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photos</title>
+  <link rel="stylesheet" href="./css/bulma/css/bulma.min.css">
+  <script src="./js/fontawesome-free-5.13.0-web/all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Envoyer une photo</h1>
+    <div class="columns">
+      <form action="" method="post" class="column is-one-third" id="form-picture">
+        <div class="field">
+          <label class="label">Titre de l’image</label>
+          <div class="control has-icons-left">
+            <input type="text" class="input" placeholder="Titre" name="title" id="input-title">
+            <span class="icon is-small is-left">
+              <i class="fas fa-image"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="file is-boxed is-centered">
+            <label class="file-label">
+              <input class="file-input" type="file" name="picture" accept="image/jpeg" id="input-picture">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  Choisir une image jpeg…
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="buttons is-centered">
+          <button class="button is-success" type="submit">Envoyer</button>
+          <button class="button is-warning" type="reset" id="button-reset">Réinitialiser</button>
+        </div>
+      </form>
+      <div class="column has-text-centered">
+        <figure>
+          <img src="" alt="" id="img-picture" class="is-hidden">
+        </figure>
+      </div>
+    </div>
+  </div>
+  <script src="./js/index.js"></script>
+</body>
+</html>
