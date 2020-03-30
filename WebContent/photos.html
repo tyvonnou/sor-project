@@ -8,23 +8,27 @@
   <script src="./style/Font-Awesome/js/all.min.js"></script>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="root">
     <h1 class="title">Envoyer une photo</h1>
     <div class="columns">
       <form action="" method="post" class="column is-one-third" id="form-picture">
         <div class="field">
           <label class="label">Titre de l’image</label>
-          <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Titre" name="title" id="input-title">
+          <div class="control has-icons-left has-icons-right">
+            <input type="text" class="input" placeholder="Titre" name="title" id="input-title" minlength="1" required>
             <span class="icon is-small is-left">
               <i class="fas fa-image"></i>
             </span>
+            <span class="icon is-small is-right is-hidden" id="icon-right-title">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
           </div>
+          <p class="help is-danger is-hidden" id="help-title"></p>
         </div>
         <div class="field">
           <div class="file is-boxed is-centered">
             <label class="file-label">
-              <input class="file-input" type="file" name="picture" accept="image/jpeg" id="input-picture">
+              <input class="file-input" type="file" name="picture" accept="image/jpeg" id="input-picture" required>
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
@@ -35,6 +39,7 @@
               </span>
             </label>
           </div>
+          <p class="help is-danger is-hidden" id="help-picture"></p>
         </div>
         <div class="buttons is-centered">
           <button class="button is-success" type="submit">Envoyer</button>
@@ -48,6 +53,6 @@
       </div>
     </div>
   </div>
-  <script src="./js/index.js"></script>
+  <script src="./js/photos.js"></script>
 </body>
 </html>
