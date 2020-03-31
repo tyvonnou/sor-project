@@ -3,36 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photos</title>
   <link rel="stylesheet" href="./style/bulma/css/bulma.min.css">
   <script src="./style/Font-Awesome/js/all.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1 class="title">Afficher une photo</h1>
+  <div class="container is-fluid">
     <div class="columns">
-      <form action="" method="get" class="column is-one-third" id="form-picture">
-        <div class="field">
-          <label class="label">Recherche par titre</label>
-          <div class="control has-icons-left has-icons-right">
-            <input type="search" class="input" placeholder="Titre" name="title" id="input-title" minlength="1" required>
-            <span class="icon is-small is-left">
-              <i class="fas fa-search"></i>
-            </span>
-            <span class="icon is-small is-right is-hidden" id="icon-right-title">
-              <i class="fas fa-exclamation-triangle"></i>
-            </span>
+      <div class="column is-2">
+        <nav class="list is-hoverable">
+          <a href="./index.html" class="list-item">Racine</a>
+          <a href="./picture.html" class="list-item">Photos par morceau</a>
+          <a href="./picture-form.html" class="list-item">Photos en un seule morceau</a>
+          <a href="./viewer.html" class="list-item is-active">Rechercher une image</a>
+        </nav>
+      </div>
+      <div class="column">
+        <h1 class="title">Afficher une photo</h1>
+        <div class="columns">
+          <form action="" method="get" class="column is-one-third" id="form-picture">
+            <div class="field">
+              <label class="label">Recherche par titre</label>
+              <div class="control has-icons-left has-icons-right">
+                <input type="search" class="input" placeholder="Titre" name="title" id="input-title" minlength="1"
+                  required>
+                <span class="icon is-small is-left">
+                  <i class="fas fa-search"></i>
+                </span>
+                <span class="icon is-small is-right is-hidden" id="icon-right-title">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              </div>
+              <p class="help is-danger is-hidden" id="help-title"></p>
+            </div>
+            <div class="buttons is-centered">
+              <button class="button is-success" type="submit">Rechercher</button>
+              <button class="button is-warning" type="reset" id="button-reset">Réinitialiser</button>
+            </div>
+          </form>
+          <div class="column" id="column-picture">
+            <figure>
+              <img src="" alt="" id="img-picture" class="is-hidden">
+            </figure>
           </div>
-          <p class="help is-danger is-hidden" id="help-title"></p>
         </div>
-        <div class="buttons is-centered">
-          <button class="button is-success" type="submit">Rechercher</button>
-          <button class="button is-warning" type="reset" id="button-reset">Réinitialiser</button>
-        </div>
-      </form>
-      <div class="column" id="column-picture">
-        <figure>
-          <img src="" alt="" id="img-picture" class="is-hidden">
-        </figure>
       </div>
     </div>
   </div>
