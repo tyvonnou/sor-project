@@ -12,6 +12,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import helpers.PartFormater;
+
 
 /**
  * Servlet implementation class Image
@@ -53,13 +55,8 @@ public class ImageServlet extends HttpServlet {
           new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
       // Get Titre img
-      String titleimg = null;
-      for (FileItem multipartItem : multipartItems) {
-        if (multipartItem.isFormField()) {
-        	titleimg = multipartItem.getString();
-          break;
-        }
-      }
+      PartFormater formater = new PartFormater(request);
+      String title = formater.readString("title");
 
       // TODO: LINK TO JAVA RMI
       
