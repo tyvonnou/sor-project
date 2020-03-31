@@ -6,7 +6,7 @@ import MessageElement from "./message-element.js";
   const formPicture = document.getElementById("form-picture");
   const inputTitle = document.getElementById("input-title");
   const imgPicture = document.getElementById("img-picture");
-  const message = new MessageElement(document.getElementById("column-picture"));
+  const message = new MessageElement(document.getElementById("root"), { childIndex: 1 });
   let imageName = "";
 
   inputTitle.addEventListener("invalid", (ev) => {
