@@ -11,7 +11,7 @@
  * @property {string} [hidden="is-hidden"] Class name to use to hide message element
  * @property {string} [success="is-success"] Class name to use to display a success message
  * @property {string} [info="is-info"] Class name to use to display a info message
- * @property {string} [error="is-error"] Class name to use to display a error message
+ * @property {string} [error="is-danger"] Class name to use to display a error message
  */
 
  /**
@@ -29,7 +29,7 @@
   hidden: "is-hidden",
   success: "is-success",
   info: "is-info",
-  error: "is-error",
+  error: "is-danger",
 };
 
 /**
@@ -93,7 +93,7 @@ export default class MessageElement {
    */
   success(...elements) {
     this._title = "Succès";
-    this._message.classList.add(this._success);
+    this._setClass(this._success);
     this._setBody(elements);
   }
 
@@ -103,7 +103,7 @@ export default class MessageElement {
    */
   info(...elements) {
     this._title = "Info";
-    this._message.classList.add(this._info);
+    this._setClass(this._info);
     this._setBody(elements)
   }
 
@@ -113,7 +113,7 @@ export default class MessageElement {
    */
   error(...elements) {
     this._titleElement.textContent = "Erreur";
-    this._message.classList.add(this._error);
+    this._setClass(this._error);
     this._setBody(elements)
   }
 

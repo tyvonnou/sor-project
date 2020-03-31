@@ -38,5 +38,5 @@ async function send(title, picture, cb = () => undefined) {
 
 addEventListener("message", (ev) => {
   const { title, picture } = ev.data;
-  send(title, picture, (data) => postMessage(data));
+  send(title, picture, (data) => postMessage({ data })).catch(err => postMessage({ error: err.message }));
 });

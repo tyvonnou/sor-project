@@ -2,17 +2,13 @@ import  MessageElement from "./message-element.js";
 import { writeHelp, showRightIcon, removeHelp } from "./helpers.js";
 
 (function() {
-  const worker = new Worker("./js/worker/buffer.js")
+  const worker = new Worker("./js/worker/send-form.js")
   const formPicture = document.getElementById("form-picture");
   const inputTitle = document.getElementById("input-title");
   const inputPicture = document.getElementById("input-picture");
   const imgPicture = document.getElementById("img-picture");
   const message = new MessageElement(document.getElementById("root"), { childIndex: 1 });
-  const progressBar = document.createElement("progress");
   let imageName = "";
-  let progressBarMax;
-
-  progressBar.classList.add("progress", "is-medium");
 
   inputTitle.addEventListener("invalid", (ev) => {
     const { target } = ev;
@@ -49,31 +45,17 @@ import { writeHelp, showRightIcon, removeHelp } from "./helpers.js";
     removeHelp(ev);
     const title = inputTitle.value;
     const picture = inputPicture.files[0];
-    progressBar.classList.remove("is-success");
-    progressBar.classList.add("is-info");
-    progressBar.value = 0;
-    progressBarMax = progressBar.max = picture.size;
-    progressBar.classList.add("is-info");
-    message.info(
-      "Photos en cours d’envoi",
-      progressBar,
-    );
+    message.info("Photos en cours d’envoi");
     worker.postMessage({ title, picture });
     ev.preventDefault();
   });
   worker.addEventListener("message", (ev) => {
-    const { data, error } = ev.data;
+    console.log("message", ev);
+    const { error } = ev.data;
     if (error) {
       message.error(error);
       return;
     }
-    progressBar.value = data.size;
-    if (data.size >= progressBarMax) {
-      progressBar.classList.replace("is-info", "is-success");
-      message.success(
-        "La photo a été correctement envoyé",
-        progressBar,
-      );
-    }
+    message.success("La photo a été correctement envoyé");
   });
 })();
