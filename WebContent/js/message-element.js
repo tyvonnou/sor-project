@@ -10,8 +10,9 @@
  * @property {string} [delete="delete"] Class name of the hide button element
  * @property {string} [hidden="is-hidden"] Class name to use to hide message element
  * @property {string} [success="is-success"] Class name to use to display a success message
- * @property {string} [info="is-info"] Class name to use to display a info message
+ * @property {string} [info="is-info"] Class name to use to display an info message
  * @property {string} [error="is-danger"] Class name to use to display a error message
+ * @property {string} [warning="is-warning"] Class name to use to display a warning message
  */
 
  /**
@@ -30,6 +31,7 @@
   success: "is-success",
   info: "is-info",
   error: "is-danger",
+  warning: "is-warning",
 };
 
 /**
@@ -63,6 +65,7 @@ export default class MessageElement {
     this._success = options.success;
     this._info = options.info;
     this._error = options.error;
+    this._warning = options.warning;
     this._message = document.createElement(options.element);
     this._message.classList.add(options.message);
     if (options.isHidden) {
@@ -112,8 +115,18 @@ export default class MessageElement {
    * @param {...Node | string} elements Elements to append in body
    */
   error(...elements) {
-    this._titleElement.textContent = "Erreur";
+    this._title = "Erreur";
     this._setClass(this._error);
+    this._setBody(elements)
+  }
+
+  /**
+   * Write the content of the message in warning mode
+   * @param {...Node | string} elements Elements to append in body
+   */
+  warning(...elements) {
+    this._title = "Avertissement";
+    this._setClass(this._warning);
     this._setBody(elements)
   }
 

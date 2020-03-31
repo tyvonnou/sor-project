@@ -50,7 +50,6 @@ import { writeHelp, showRightIcon, removeHelp } from "./helpers.js";
     ev.preventDefault();
   });
   worker.addEventListener("message", (ev) => {
-    console.log("message", ev);
     const { error } = ev.data;
     if (error) {
       message.error(error);

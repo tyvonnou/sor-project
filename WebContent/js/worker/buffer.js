@@ -2,7 +2,7 @@ importScripts("./helpers.js");
 
 /**
  * See {@link sendCallback}
- * @typedef SendDataCallback
+ * @typedef {object} SendDataCallback
  * @property {number} size Sent buffer size
  */
 
@@ -31,7 +31,7 @@ async function send(title, picture, cb = () => undefined) {
     data.set("size", buffer.size);
     data.set("picture", buffer, title);
     begin += bufferSize;
-    await fetchFormData("/photos", data);
+    await fetchFormData("/photos", data, { convertFormData: false });
     cb({ size: begin + buffer.size });
   } while (begin < picture.size);
 }

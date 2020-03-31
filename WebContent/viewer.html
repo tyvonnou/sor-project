@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style/bulma/css/bulma.min.css">
+  <script src="./style/Font-Awesome/js/all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Afficher une photo</h1>
+    <div class="columns">
+      <form action="" method="get" class="column is-one-third" id="form-picture">
+        <div class="field">
+          <label class="label">Recherche par titre</label>
+          <div class="control has-icons-left has-icons-right">
+            <input type="search" class="input" placeholder="Titre" name="title" id="input-title" minlength="1" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+            <span class="icon is-small is-right is-hidden" id="icon-right-title">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+          </div>
+          <p class="help is-danger is-hidden" id="help-title"></p>
+        </div>
+        <div class="buttons is-centered">
+          <button class="button is-success" type="submit">Rechercher</button>
+          <button class="button is-warning" type="reset" id="button-reset">Réinitialiser</button>
+        </div>
+      </form>
+      <div class="column" id="column-picture">
+        <figure>
+          <img src="" alt="" id="img-picture" class="is-hidden">
+        </figure>
+      </div>
+    </div>
+  </div>
+  <script src="./js/viewer.js" type="module"></script>
+</body>
+</html>
