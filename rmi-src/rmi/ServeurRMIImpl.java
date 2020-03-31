@@ -20,7 +20,7 @@ public class ServeurRMIImpl implements ServeurRMI {
 	public static void main(String[] args) {
 		int port = Config.config.getPort();
 		
-		// Création registry
+		// CrÃ©ation registry
 		Registry registry = null;
 		try {
 			LocateRegistry.createRegistry(port);
@@ -28,7 +28,7 @@ public class ServeurRMIImpl implements ServeurRMI {
 		} catch (RemoteException e) {
 			logger.severe(e.getMessage());
 		}
-		// Création objet distant
+		// CrÃ©ation objet distant
 		ServeurRMIImpl serveurImpl = new ServeurRMIImpl();
 		ServeurRMI serveur = null;
 		try {
@@ -43,7 +43,7 @@ public class ServeurRMIImpl implements ServeurRMI {
 		} catch (NullPointerException | RemoteException e) {
 			logger.severe(e.getMessage());
 		}
-		logger.info("Serveur RMI lancé");
+		logger.info("Serveur RMI lancÃ©");
 	}
 
 }

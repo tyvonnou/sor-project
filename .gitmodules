@@ -1,0 +1,6 @@
+[submodule "WebContent/style/bulma"]
+	path = WebContent/style/bulma
+	url = https://github.com/jgthms/bulma.git
+[submodule "WebContent/style/Font-Awesome"]
+	path = WebContent/style/Font-Awesome
+	url = https://github.com/FortAwesome/Font-Awesome.git
