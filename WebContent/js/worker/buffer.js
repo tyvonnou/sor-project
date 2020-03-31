@@ -1,31 +1,29 @@
+importScripts("./helpers.js");
+
 /**
- * Send data
- * @param {string} url URL to fetch
- * @param {BodyInit} body Data to send
- * @param {{ method: "POST" | "PUT" | "PATCH" }} options
- * @returns Response promise
+ * See {@link sendCallback}
+ * @typedef SendDataCallback
+ * @property {number} size Sent buffer size
  */
-function fetchFormData(url, body, { method } = { method: "POST" }) {
-  if (!method) {
-    method = "POST";
-  }
-  return fetch(url, {
-    method,
-    body,
-  })
-}
+
+/**
+ * Callback after every request
+ * @callback sendCallback
+ * @param {SendDataCallback} data
+ */
 
 /**
  * Send the picture to the server
  * @param {string} title Picture title
  * @param {Blob} picture Picture JPEG
- * @param {(data: { size: number }) => void} cb Callback at every request
+ * @param {sendCallback} [cb=() => undefined] Callback at every request 
  */
-async function send(title, picture, cb = () => {}) {
+async function send(title, picture, cb = () => undefined) {
   const data = new FormData();
   const bufferSize = 1000;
   let begin = 0;
   data.set("title", title);
+  data.set("picture-size", picture.size);
   do {
     const end = begin + bufferSize;
     const buffer = picture.slice(begin, end, "application/octet-stream");
