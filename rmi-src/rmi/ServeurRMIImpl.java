@@ -1,9 +1,5 @@
 package rmi;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -29,7 +25,7 @@ public class ServeurRMIImpl implements ServeurRMI {
 		logger.log(Level.INFO, "newImage '{}'", title);
 		Integer bufferSize = Config.config.getBufferSize();
 		Integer length = size / bufferSize + 1;
-		this.tmpImages.put(title, new TmpImage(length));
+		this.tmpImages.putIfAbsent(title, new TmpImage(length));
 	}
 
 	@Override
@@ -43,15 +39,7 @@ public class ServeurRMIImpl implements ServeurRMI {
 		}
 		if (tmp.isFull()) {
 			byte[] bytes = tmp.join();
-			Path p = Paths.get(title).toAbsolutePath();
-			logger.info(p.toString());
-			try {
-				FileOutputStream out = new FileOutputStream(p.toFile());
-				out.write(bytes);
-			} catch (IOException e) {
-				logger.severe(e.getMessage());
-			}
-			
+			this.tmpImages.remove(title);
 		}
 	}
 
