@@ -2,6 +2,7 @@ package helpers;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -88,19 +89,19 @@ public class PartFormater {
 	/*
 	 * Plus utile car pas de liason avec une BDD
 	 */
-//	public File getFile(String name) throws IOException {
-//		Part part;
-//		try {
-//			part = this.request.getPart(name);
-//		} catch (Exception e) {
-//			this.errors.add(name);
-//			e.printStackTrace();
-//			return null;
-//		}
-//		String dst = randomFilename() + "." + part.getContentType().split("/")[1];
-//		Path abs = Paths.get(Config.config.getBucket(), dst);
-//		return new File(part, abs);
-//	}
+	public File getFile(String name) throws IOException {
+		Part part;
+		try {
+			part = this.request.getPart(name);
+		} catch (Exception e) {
+			this.errors.add(name);
+			e.printStackTrace();
+			return null;
+		}
+		String dst = randomFilename() + "." + part.getContentType().split("/")[1];
+		Path abs = Paths.get(dst);
+		return new File(part, abs);
+	}
 	
 	/**
 	 * Send error to client if any
@@ -113,8 +114,7 @@ public class PartFormater {
 			return false;
 		}
 		
-		int code = HttpStatusCode.UnprocessableEntity.getCode();
-		response.setStatus(code);
+		HttpStatusCode.UnprocessableEntity.sendStatus(response);
 		
 		return true;
 	}

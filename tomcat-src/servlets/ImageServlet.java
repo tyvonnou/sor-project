@@ -8,9 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 
 import helpers.PartFormater;
 
@@ -35,7 +33,9 @@ public class ImageServlet extends HttpServlet {
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {}
+      throws ServletException, IOException {
+	  System.out.println("do get image");
+  }
 
   /**
    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -45,32 +45,20 @@ public class ImageServlet extends HttpServlet {
     System.out.println("doPost image");
 
     try {
-      // Wrong form type
-      if (!ServletFileUpload.isMultipartContent(request)) {
-        response.setStatus(422);
-        return;
-      }
-
-      List<FileItem> multipartItems =
-          new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
       // Get Titre img
       PartFormater formater = new PartFormater(request);
       String title = formater.readString("title");
-
+      System.out.println(title);
+      PartFormater.File picture = formater.getFile("picture");
+      
+      if (formater.sendError(response)) return;
+      
+      
       // TODO: LINK TO JAVA RMI
       
       // Get the images
-      for (FileItem multipartItem : multipartItems) {
-        if (!multipartItem.isFormField()) {
-
-          // TODO: ADD IMAGE TO RMI
-       
-
-          // TODO: Query execution
-        }
-       
-      }
+      
 
     } catch (Exception e) {
       response.setStatus(500);
