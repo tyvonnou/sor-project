@@ -41,7 +41,7 @@ public class TmpImage {
 		}
 	}
 	
-	public boolean add(Integer begin, byte[] buffer) {
+	public boolean add(Long begin, byte[] buffer) {
 		if (this.isFull()) {
 			return false;
 		}

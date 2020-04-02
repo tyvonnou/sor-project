@@ -69,7 +69,7 @@ public abstract class SQLModel<T> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected T insert(Base b) throws IllegalAccessException, SQLException {
+	T insert(Base b) throws IllegalAccessException, SQLException {
 		String tableName = getTableName(this.getClass());
 		Field[] fields = this.getClass().getDeclaredFields();
 		InsertStatement insert = new InsertStatement(tableName);

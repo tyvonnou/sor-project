@@ -3,7 +3,7 @@ package rmi;
 import java.util.Arrays;
 
 public class Blob {
-	public Integer getBegin() {
+	public Long getBegin() {
 		return begin;
 	}
 
@@ -15,11 +15,11 @@ public class Blob {
 		return buffer.length;
 	}
 
-	public Blob(Integer begin, byte[] buffer) {
+	public Blob(Long begin, byte[] buffer) {
 		this.begin = begin;
 		this.buffer = Arrays.copyOf(buffer, buffer.length);
 	}
 
-	protected Integer begin;
+	protected Long begin;
 	protected byte[] buffer;
 }

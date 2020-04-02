@@ -10,32 +10,13 @@ import base.SQLModel;
 
 @Table(name = "t_image")
 public class Image extends SQLModel<Image> {	
-	public Integer getId() {
-		return id;
-	}
+	public Image() {}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
+	public Image(String title, byte[] jpeg) {
 		this.title = title;
-	}
-	
-	public byte[] getJpeg() {
-		return jpeg;
-	}
-	
-	public void setJpeg(byte[] jpeg) {
 		this.jpeg = jpeg;
 	}
 
-	public Image() {}
-	
 	public Image(Integer id, String title, byte[] jpeg) {
 		this.id = id;
 		this.title = title;
@@ -46,13 +27,13 @@ public class Image extends SQLModel<Image> {
 	@NotNull
 	@AutoIncrement
 	@PrimaryKey
-	protected Integer id;
+	public Integer id;
 	
 	@Column(type = DatabaseType.STRING)
 	@NotNull
-	protected String title;
+	public String title;
 	
 	@Column(type = DatabaseType.BYTES)
 	@NotNull
-	protected byte[] jpeg;
+	public byte[] jpeg;
 }
