@@ -69,7 +69,7 @@ public abstract class SQLModel<T> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	T insert(Base b) throws IllegalAccessException, SQLException {
+	public T insert() throws IllegalAccessException, SQLException {
 		String tableName = getTableName(this.getClass());
 		Field[] fields = this.getClass().getDeclaredFields();
 		InsertStatement insert = new InsertStatement(tableName);
@@ -84,8 +84,8 @@ public abstract class SQLModel<T> {
 			}
 			insert.put(field.getName(), field.get(this), column.type().sqlType());
 		}
-		b.open();
-		try (PreparedStatement statement = b.conn.prepareStatement(insert.toString(), Statement.RETURN_GENERATED_KEYS)) {
+		base.open();
+		try (PreparedStatement statement = base.conn.prepareStatement(insert.toString(), Statement.RETURN_GENERATED_KEYS)) {
 			SQLValue[] values = insert.values();
 			for (int i = 0; i < values.length; i++) {
 				SQLValue value = values[i];
@@ -100,8 +100,10 @@ public abstract class SQLModel<T> {
 				primaryKey.set(this, result);
 			}
 		} finally {
-			b.close();
+			base.close();
 		}
 		return (T) this;
 	}
+	
+	public static final Base base = new Base();
 }

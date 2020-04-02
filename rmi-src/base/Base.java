@@ -1,20 +1,13 @@
 package base;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.logging.Logger;
 
-import annotation.Column;
-import annotation.PrimaryKey;
 import config.Config;
 import models.Image;
 
@@ -98,58 +91,19 @@ public class Base {
 		this.close();
 	}
 	
-	public <T extends SQLModel<T>> T insert(T model) throws SQLException, IllegalAccessException {
-		return model.insert(this);
-	}
-
-	public <R> List<R> select(String sql, Function<ResultSet, R> function) throws SQLException {
+	public byte[] selectJpeg(String title) throws SQLException {
 		this.open();
-		PreparedStatement statement = this.conn.prepareStatement(sql);
+		PreparedStatement statement = this.conn.prepareStatement("SELECT jpeg FROM t_image WHERE titre=?");
+		statement.setString(1, title);
 		ResultSet rs = statement.executeQuery();
-		List<R> objects = new ArrayList<>();
-		while (rs.next()) {
-			objects.add(function.apply(rs));
+		byte[] result = new byte[0];
+		if (rs.next()) {
+			result = rs.getBytes("jpeg");
 		}
 		statement.close();
 		rs.close();
 		this.close();
-		return objects;
-	}
-	
-	public <R> List<R> select(String sql, Consumer<PreparedStatement> setStatement, Function<ResultSet, R> function) throws SQLException {
-		this.open();
-		PreparedStatement statement = this.conn.prepareStatement(sql);
-		setStatement.accept(statement);
-		ResultSet rs = statement.executeQuery();
-		List<R> objects = new ArrayList<>();
-		while (rs.next()) {
-			objects.add(function.apply(rs));
-		}
-		rs.close();
-		statement.close();
-		this.close();
-		return objects;
-	}
-
-	public Integer deleteOne(SQLModel<?> model) throws SQLException, IllegalArgumentException, IllegalAccessException {
-		Delete delete = new Delete(SQLModel.getTableName(model.getClass()));
-		for (Field f : model.getClass().getFields()) {
-			if (f.isAnnotationPresent(Column.class) && f.isAnnotationPresent(PrimaryKey.class)) {
-				delete.putWhere(f, model);
-			}
-		}
-		this.open();
-		PreparedStatement statement = this.conn.prepareStatement(delete.toString());
-		SQLValue[] where = delete.where();
-		for (int i = 0; i < where.length; i++) {
-			statement.setObject(i + 1, where[i].getValue(), where[i].getSqlType());
-		}
-		Integer res = statement.executeUpdate();
-		try {
-			statement.close();
-			this.close();
-		} catch (Exception e) {}
-		return res;
+		return result;
 	}
 	
 	public static void main(String[] args) {

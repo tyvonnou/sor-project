@@ -4,13 +4,16 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import base.Base;
+import base.SQLModel;
 import config.Config;
 import models.Image;
 
@@ -42,13 +45,23 @@ public class ServeurRMIImpl implements ServeurRMI {
 		if (tmp.isFull()) {
 			this.tmpImages.remove(title);
 			Image img = new Image(title, tmp.join());
-			Base b = new Base();
 			try {
-				b.insert(img);
+				img.insert();
 			} catch (IllegalAccessException | SQLException e) {
 				logger.severe(e.getMessage());
 			}
 		}
+	}
+	
+	@Override
+	public byte[] getImage(String title) throws RemoteException {
+		Base base = new Base();
+		try {
+			return base.selectJpeg(title);
+		} catch (SQLException e) {
+			logger.severe(e.getMessage());			
+		}
+		return new byte[0];
 	}
 
 	public static void main(String[] args) {
