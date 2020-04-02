@@ -1,6 +1,15 @@
 package models;
 
-public class Image {	
+import annotation.AutoIncrement;
+import annotation.Column;
+import annotation.NotNull;
+import annotation.PrimaryKey;
+import annotation.Table;
+import base.DatabaseType;
+import base.SQLModel;
+
+@Table(name = "t_image")
+public class Image extends SQLModel<Image> {	
 	public Integer getId() {
 		return id;
 	}
@@ -33,7 +42,17 @@ public class Image {
 		this.jpeg = jpeg;
 	}
 
+	@Column(type = DatabaseType.INTEGER)
+	@NotNull
+	@AutoIncrement
+	@PrimaryKey
 	protected Integer id;
+	
+	@Column(type = DatabaseType.STRING)
+	@NotNull
 	protected String title;
+	
+	@Column(type = DatabaseType.BYTES)
+	@NotNull
 	protected byte[] jpeg;
 }

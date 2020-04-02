@@ -41,7 +41,7 @@ public class Config {
 		this.service = rb.getString("service", "sor-project");
 		this.databaseHost = rb.getString("database.host", "localhost");
 		this.databasePort = rb.getInteger("database.port", 3306);
-		this.databaseName = rb.getString("database.name", "sor-project");
+		this.databaseName = rb.getString("database.name", "SorProject");
 		this.databaseUser = rb.getString("database.user", "ubo");
 		this.databasePassword = rb.getString("database.password", "ubo");
 		this.bufferSize = rb.getInteger("bufferSize", 1000);
