@@ -27,6 +27,7 @@ You can create your own configuration for RMI (create `rmi-src/config/config.pro
 * `database.port` Database port (by default `3306`)
 * `database.user` Database user (by default `ubo`)
 * `database.password` Database password (by default `ubo`)
+* `database.name` Database name (by default `SorProject`)
 * `bufferSize` Buffer size for picture part (by default `1000`)
 
 ## Tomcat
