@@ -40,6 +40,8 @@ import MessageElement from "./message-element.js";
     }
     if (picture) {
       imgPicture.src = picture;
+      imgPicture.classList.remove("is-hidden");
+      message.hide();
     } else {
       message.warning(`L'image ${imageName} n'a pas été trouvé.`)
     }

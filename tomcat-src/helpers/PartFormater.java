@@ -2,6 +2,8 @@ package helpers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -24,16 +26,8 @@ public class PartFormater {
 			this.part = part;
 		}
 		
-		public byte[] getPart() {
-			
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			try {
-				output.write(this.getPart());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			byte[] out = output.toByteArray();
-			return out;
+		public InputStream getInputStream() throws IOException {
+			return this.part.getInputStream();
 		}
 
 		public String getContentType() {
