@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -9,8 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import config.Config;
 import helpers.PartFormater;
+import rmi.ServeurRMI;
 
 
 /**
@@ -46,17 +49,24 @@ public class ImageServlet extends HttpServlet {
 
     try {
 
-      // Get Titre img
+      // Get Data
       PartFormater formater = new PartFormater(request);
       String title = formater.readString("title");
-      System.out.println(title);
+      Long size = formater.readLong("picture-size");
+      Long begin = formater.readLong("begin");
+
       PartFormater.File picture = formater.getFile("picture");
       
       if (formater.sendError(response)) return;
       
       
       // TODO: LINK TO JAVA RMI
-      
+      	Registry registry = LocateRegistry.getRegistry(Config.config.getPort());
+		ServeurRMI serveurRMI;
+		serveurRMI = (ServeurRMI) registry.lookup(Config.config.getService());
+		serveurRMI.newImage(title, size);;
+		serveurRMI.insertByte(title, begin, picture.getPart());
+		
       // Get the images
       
 

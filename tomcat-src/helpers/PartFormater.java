@@ -1,5 +1,6 @@
 package helpers;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +22,18 @@ public class PartFormater {
 		protected File(Part part, Path pathname) {
 			this.pathname = pathname;
 			this.part = part;
+		}
+		
+		public byte[] getPart() {
+			
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			try {
+				output.write(this.getPart());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			byte[] out = output.toByteArray();
+			return out;
 		}
 
 		public String getContentType() {
