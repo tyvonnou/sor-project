@@ -23,48 +23,19 @@ import rmi.ServeurRMI;
 /**
  * Servlet implementation class Image
  */
-@WebServlet("/image/*")
+@WebServlet("/image_onepart")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5,
     maxRequestSize = 1024 * 1024 * 5 * 5)
-public class ImageServlet extends HttpServlet {
+public class ImageUnPartServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
-  private static Logger logger = Logger.getLogger(ImageServlet.class.getName());
+  private static Logger logger = Logger.getLogger(ImageUnPartServlet.class.getName());
+
 
   /**
    * @see HttpServlet#HttpServlet()
    */
-  public ImageServlet() {
+  public ImageUnPartServlet() {
     super();
-  }
-
-  /**
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-   */
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-	    logger.info("GET");
-		String title = request.getPathInfo();
-		if (title == null || title.isEmpty()) {
-			HttpStatusCode.NotFound.sendStatus(response);
-			return;
-		}
-		String[] split = title.split("/", 3);
-		if (split.length >= 3) {
-			HttpStatusCode.NotFound.sendStatus(response);
-			return;
-		}
-		title = split[1];
-		try {
-			ServeurRMI serveurRMI = getServerRMI();
-			byte[] bytes = serveurRMI.getImage(title);
-			if (bytes.length == 0) {
-				HttpStatusCode.NotFound.sendStatus(response);
-			}
-			response.getOutputStream().write(bytes);
-		} catch (Exception e) {
-			HttpStatusCode.InternalServerError.sendStatus(response);
-			logger.warning(e.getMessage());
-		}
   }
 
   /**
@@ -72,29 +43,29 @@ public class ImageServlet extends HttpServlet {
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-	logger.info("POST");
+	  logger.info("POST");
+
     try {
 
       // Get Data
       PartFormater formater = new PartFormater(request);
       String title = formater.readString("title");
-      Long pictureSize = formater.readLong("picture-size");
-      Integer size = formater.readInteger("size");
-      Long begin = formater.readLong("begin");
+      Long pictureSize = formater.readLong("size");
+      Long begin = 0L;
 
       PartFormater.File picture = formater.getFile("picture");
       
       if (formater.sendError(response)) return;
 		ServeurRMI serveurRMI = getServerRMI();
 		serveurRMI.newImage(title, pictureSize);
-		byte[] bytes = new byte[size];
+		byte[] bytes = new byte[Config.config.getBufferSize()];
 		try (InputStream in = picture.getInputStream()) {
-			if (in.read(bytes) == -1) {
-				throw new IOException("Buffer is invalid");
+			int res;
+			while ((res = in.read(bytes)) != -1) {
+				serveurRMI.insertByte(title, begin, bytes);
+				begin += res;
 			}
-			serveurRMI.insertByte(title, begin, bytes);			
 		}
-		      
 
     } catch (Exception e) {
 		HttpStatusCode.InternalServerError.sendStatus(response);
