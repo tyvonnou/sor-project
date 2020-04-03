@@ -1,47 +1,58 @@
 package config;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 public class Config {
 	public static final Config config = new Config("config/config");
-	
+
 	public Integer getPort() {
-		return this.port;
+		return port;
 	}
 
 	public String getService() {
-		return this.service;
+		return service;
+	}
+
+	public String getDatabaseHost() {
+		return databaseHost;
+	}
+
+	public Integer getDatabasePort() {
+		return databasePort;
+	}
+
+	public String getDatabaseName() {
+		return databaseName;
+	}
+	
+	public String getDatabaseUser() {
+		return databaseUser;
+	}
+	
+	public String getDatabasePassword() {
+		return databasePassword;
+	}
+	
+	public Integer getBufferSize() {
+		return bufferSize;
 	}
 
 	public Config(String resourceBundleName) {
-		ResourceBundle rb = null;
-		try {
-			rb = ResourceBundle.getBundle(resourceBundleName);			
-		} catch (MissingResourceException e) {
-			this.port = DEFAULT_PORT;
-			this.service = DEFAULT_SERVICE;
-		}
-		if (rb != null) {
-			this.readRb(rb);
-		}
+		ResourceBundle rb = new ResourceBundle(resourceBundleName);
+		this.port = rb.getInteger("port", 10000);
+		this.service = rb.getString("service", "sor-project");
+		this.databaseHost = rb.getString("database.host", "localhost");
+		this.databasePort = rb.getInteger("database.port", 3306);
+		this.databaseName = rb.getString("database.name", "SorProject");
+		this.databaseUser = rb.getString("database.user", "ubo");
+		this.databasePassword = rb.getString("database.password", "ubo");
+		this.bufferSize = rb.getInteger("bufferSize", 1000);
 	}
 	
-	protected void readRb(ResourceBundle rb) {
-		try {
-			this.port = Integer.valueOf(rb.getString("port"));			
-		} catch (MissingResourceException e) {
-			this.port = DEFAULT_PORT;
-		}
-		try {
-			this.service = rb.getString("service");
-		} catch (MissingResourceException e) {
-			this.service = DEFAULT_SERVICE;
-		}
-	}
-	
-	protected static final int DEFAULT_PORT = 10000;
-	protected static final String DEFAULT_SERVICE = "sor-project";
 	protected Integer port;
 	protected String service;
+	protected String databaseHost;
+	protected Integer databasePort;
+	protected String databaseName;
+	protected String databaseUser;
+	protected String databasePassword;
+	protected Integer bufferSize;
 }

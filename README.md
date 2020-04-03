@@ -9,9 +9,13 @@ There are two parts projects:
 
 ## RMI
 
+### Dependencies
+
+* mysql-connector-java (jar)
+
 ### Edit
 
-In eclipse, create a java project remove src directory and create symbolic link between `rmi-src` of this repository and `src` on your java project.
+In eclipse, create a java project remove `src` directory and create symbolic link between `rmi-src` of this repository and `src` on your java project.
 
 ### Config
 
@@ -19,12 +23,17 @@ You can create your own configuration for RMI (create `rmi-src/config/config.pro
 
 * `port` port to use to share objects (by default `10000`)
 * `service` name of RMI service (by default `sor-project`)
+* `database.host` Database host (by default `localhost`)
+* `database.port` Database port (by default `3306`)
+* `database.user` Database user (by default `ubo`)
+* `database.password` Database password (by default `ubo`)
+* `bufferSize` Buffer size for picture part (by default `1000`)
 
 ## Tomcat
 
 ### Edit
 
-In eclipse, create a java project remove src directory and create symbolic link between `tomcat-src` of this repository and `src` on your java project.
+In eclipse, create a java project remove `src` directory and create symbolic link between `tomcat-src` of this repository and `src` on your java project.
 You have to download tomcat too and import it in eclipse.
 
 ## How to create symbolic link
