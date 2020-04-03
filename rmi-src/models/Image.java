@@ -1,8 +1,5 @@
 package models;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import annotation.AutoIncrement;
 import annotation.Column;
 import annotation.NotNull;
@@ -18,11 +15,11 @@ public class Image extends SQLModel<Image> {
 	@AutoIncrement
 	@PrimaryKey
 	public Integer idImage;
-	
+
 	@Column(type = DatabaseType.STRING)
 	@NotNull
 	public String titre;
-	
+
 	@Column(type = DatabaseType.BYTES)
 	@NotNull
 	public byte[] jpeg;

@@ -31,7 +31,7 @@ async function send(title, picture, cb = () => undefined) {
     data.set("size", buffer.size);
     data.set("picture", buffer, title);
     begin += bufferSize;
-    await fetchFormData("/photos", data, { convertFormData: false });
+    await fetchFormData("/Photos-Tomcat/image", data, { convertFormData: false });
     cb({ size: begin + buffer.size });
   } while (begin < picture.size);
 }

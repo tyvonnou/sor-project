@@ -6,7 +6,7 @@ class ResourceBundle {
 	
 	public ResourceBundle(String baseName) {
 		try {
-			this.rb = java.util.ResourceBundle.getBundle(baseName);			
+			this.rb = java.util.ResourceBundle.getBundle(baseName);
 		} catch (MissingResourceException e) {
 			this.rb = null;
 		}
